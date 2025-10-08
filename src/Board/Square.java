@@ -11,7 +11,6 @@ public class Square {
     private SquareType type;
     private Piece currentPiece;
 
-
     public Square(Coordinate coordinate, SquareType type) {
         this.coordinate = coordinate;
         this.type = type;
@@ -27,7 +26,10 @@ public class Square {
 
     public void setPiece(Piece piece) {
         currentPiece = piece;
+        piece.setPosition(this);
     }
 
-
+    public Piece getPiece() {
+        return currentPiece;
+    }
 }

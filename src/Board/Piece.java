@@ -7,9 +7,11 @@ public class Piece {
     private final PieceType type;
     private Square curPosition;
     private boolean status; // 0 for died, 1 for alive
+    private boolean belongs; // 0 for lower player, 1 for upper player
 
-    public Piece(PieceType _type) {
+    public Piece(PieceType _type, boolean _belongs) {
         type = _type;
+        belongs = _belongs;
         status = true;
     }
 
@@ -19,5 +21,18 @@ public class Piece {
 
     public PieceType getType() {
         return type;
+    }
+
+    public boolean getBelongs() {
+        return belongs;
+    }
+
+    public void setPosition(Square position) {
+        curPosition = position;
+    }
+
+    public void setDie() {
+        status = false;
+        curPosition = null;
     }
 }
