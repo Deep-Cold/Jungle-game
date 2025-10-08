@@ -9,6 +9,11 @@ public class Coordinate {
         y = _y;
     }
 
+    public Coordinate(Coordinate c) {
+        x = c.x;
+        y = c.y;
+    }
+
     public int getX() {
         return x;
     }
@@ -31,5 +36,22 @@ public class Coordinate {
 
     public boolean equals(Coordinate target) {
         return x == target.getX() && y == target.getY();
+    }
+
+    public void moveByChar(char direction) {
+        switch (direction) {
+            case 'L':
+                changeX(-1);
+                break;
+            case 'R':
+                changeX(1);
+                break;
+            case 'U':
+                changeY(-1);
+                break;
+            case 'D':
+                changeY(1);
+                break;
+        }
     }
 }

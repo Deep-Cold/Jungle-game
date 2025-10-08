@@ -6,7 +6,8 @@ import Elements.*;
 public class Board {
     private int length, width;
     private Square[][] board;
-    private MovingValidator movingValidator;
+    private Coordinate lowerPlayerDen, upperPlayerDen;
+    private final MovingValidator movingValidator;
 
     public Board() {
         setDefaultBoard();
@@ -21,11 +22,13 @@ public class Board {
         // Set up special square
         board[3][1] = new SpecialSquare(new Coordinate(3, 1), SquareType.Trap, false);
         board[4][1] = new SpecialSquare(new Coordinate(4, 1), SquareType.Den, false);
+        lowerPlayerDen = new Coordinate(4, 1);
         board[5][1] = new SpecialSquare(new Coordinate(5, 1), SquareType.Trap, false);
         board[4][2] = new SpecialSquare(new Coordinate(4, 2), SquareType.Trap, false);
 
         board[3][9] = new SpecialSquare(new Coordinate(3, 9), SquareType.Trap, true);
         board[4][9] = new SpecialSquare(new Coordinate(4, 9), SquareType.Den, true);
+        upperPlayerDen = new Coordinate(4, 9);
         board[5][9] = new SpecialSquare(new Coordinate(5, 9), SquareType.Trap, true);
         board[4][8] = new SpecialSquare(new Coordinate(4, 8), SquareType.Trap, true);
 
@@ -90,5 +93,44 @@ public class Board {
 
     public int getWidth() {
         return width;
+    }
+
+    public Square getSquare(Coordinate c) {
+        if(!c.checkBound(getLength(), getWidth())) {
+            throw new IndexOutOfBoundsException();
+        }
+        return board[c.getX()][c.getY()];
+    }
+
+    /*
+        need change this function to do additional logging
+     */
+    public boolean temptMove(String name, boolean turn, char direction) {
+        Coordinate newCoordinate;
+        try {
+            newCoordinate = movingValidator.temptMove(name, turn, direction);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+        Piece curPiece = movingValidator.getTargetPiece(name, turn);
+        Square newSquare = getSquare(newCoordinate), originalSquare = curPiece.getPosition();
+
+        if(newSquare.getPiece() != null) {
+            newSquare.getPiece().setDie();
+        }
+
+        originalSquare.setPiece(null);
+        newSquare.setPiece(curPiece);
+
+        return true;
+    }
+
+    /*
+        side should be 0 for lower player
+     */
+    public boolean inDen(boolean side) {
+        return getSquare(side ? upperPlayerDen : lowerPlayerDen).getPiece() != null;
     }
 }

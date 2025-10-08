@@ -26,7 +26,9 @@ public class Square {
 
     public void setPiece(Piece piece) {
         currentPiece = piece;
-        piece.setPosition(this);
+        if(piece != null) {
+            piece.setPosition(this);
+        }
     }
 
     public Piece getPiece() {

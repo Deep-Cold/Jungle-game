@@ -1,20 +1,19 @@
 package Controller;
 
-import Board.Piece;
-import Board.Board;
+import Board.*;
+import Elements.*;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 public class MovingValidator {
-    private final Dictionary upperPlayerPieces;
-    private final Dictionary lowerPlayerPieces;
+    private final HashMap<String, Piece> upperPlayerPieces;
+    private final HashMap<String, Piece> lowerPlayerPieces;
     private final Board board;
 
     public MovingValidator(Board _board) {
         board = _board;
-        upperPlayerPieces = new Hashtable<String, Piece>();
-        lowerPlayerPieces = new Hashtable<String, Piece>();
+        upperPlayerPieces = new HashMap<String, Piece>();
+        lowerPlayerPieces = new HashMap<String, Piece>();
 
         int n = board.getLength(), m = board.getWidth();
         for(int i = 1; i <= n; i++) {
@@ -32,12 +31,99 @@ public class MovingValidator {
         }
     }
 
+    public boolean temptCapture(Piece attacker, Piece defender) {
+        if((attacker.getPosition().getType() == SquareType.River ^ defender.getPosition().getType() == SquareType.River)) {
+            if(defender.getPosition().getType() == SquareType.Trap) {
+                return true;
+            } else {
+                return attacker.getType().canCapture(defender.getType());
+            }
+        }
+        return false;
+    }
+
+    /*
+        turn should be 0 if this is the lower player's turn
+     */
+    public Piece getTargetPiece(String name, boolean side) {
+        return (Piece) (side ? upperPlayerPieces.get(name) : lowerPlayerPieces.get(name));
+    }
+
+    /*
+        turn should be 0 if this is the lower player's turn
+     */
+    public Coordinate temptMove(String name, boolean turn, char direction) {
+        Piece curPiece = (Piece) (turn ? upperPlayerPieces.get(name) : lowerPlayerPieces.get(name));
+
+        Coordinate newPosition = new Coordinate(curPiece.getPosition().getCoordinate());
+        newPosition.moveByChar(direction);
+
+        if(!newPosition.checkBound(board.getLength(), board.getWidth())) {
+            throw new IllegalArgumentException("Your move out of the board!");
+        }
+
+        Square curSquare = board.getSquare(newPosition);
+
+        if(curSquare.getType() == SquareType.Den && ((SpecialSquare) curSquare).getSide() == curPiece.getBelongs()) {
+            throw new IllegalArgumentException("You can not move in your den");
+        }
+
+        if(curSquare.getType() == SquareType.River) {
+            if(curPiece.getType() == PieceType.Rat) {
+                if(curSquare.getPiece() != null) {
+                    if(temptCapture(curPiece, curSquare.getPiece())) {
+                        return newPosition;
+                    } else {
+                        if(curPiece.getBelongs() == curSquare.getPiece().getBelongs()) {
+                            throw new IllegalArgumentException("The target square have another your piece");
+                        }
+                        throw new IllegalArgumentException("You can not capture target piece!");
+                    }
+                } else {
+                    return newPosition;
+                }
+            } else if(curPiece.getType() == PieceType.Lion || curPiece.getType() == PieceType.Tiger) {
+                while(newPosition.checkBound(board.getLength(), board.getWidth())) {
+                    curSquare = board.getSquare(newPosition);
+                    if(curSquare.getType() == SquareType.River) {
+                        if(curSquare.getPiece() != null) {
+                            throw new IllegalArgumentException("You can not cross a river with another piece in the middle");
+                        }
+                    } else {
+                        if(curSquare.getPiece() != null) {
+                            if(temptCapture(curPiece, curSquare.getPiece())) {
+                                return newPosition;
+                            } else {
+                                if(curPiece.getBelongs() == curSquare.getPiece().getBelongs()) {
+                                    throw new IllegalArgumentException("The target square have another your piece");
+                                }
+                                throw new IllegalArgumentException("You can not capture target piece!");
+                            }
+                        }
+                    }
+                    newPosition.moveByChar(direction);
+                }
+            }
+        } else {
+            if(temptCapture(curPiece, curSquare.getPiece())) {
+                return newPosition;
+            } else {
+                if(curPiece.getBelongs() == curSquare.getPiece().getBelongs()) {
+                    throw new IllegalArgumentException("The target square have another your piece");
+                }
+                throw new IllegalArgumentException("You can not capture target piece!");
+            }
+        }
+        return null;
+    }
+
     // For testing only
-    public Dictionary getUpperDictionary() {
+    public HashMap<String, Piece> getUpperDictionary() {
         return upperPlayerPieces;
     }
 
-    public Dictionary getLowerDictionary() {
+    public HashMap<String, Piece> getLowerDictionary() {
         return lowerPlayerPieces;
     }
+
 }

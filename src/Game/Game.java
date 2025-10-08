@@ -1,6 +1,15 @@
 package Game;
 
+import Board.Board;
+
 public class Game {
+    private final Board board;
+    private final Player upperPlayer, lowerPlayer;
+
+    public Game() {
+        board = new Board();
+    }
+
 
     public void startNew() {
 
