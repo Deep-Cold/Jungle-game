@@ -8,14 +8,15 @@ public class Game {
 
     public Game() {
         board = new Board();
-    }
-
-
-    public void startNew() {
-
+        upperPlayer = new Player();
+        lowerPlayer = new Player();
     }
 
     public void save() {
 
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

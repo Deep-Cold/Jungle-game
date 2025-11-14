@@ -1,8 +1,10 @@
 package Controller;
 
-import org.junit.jupiter.api.BeforeAll;
+import Elements.Coordinate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import Board.Board;
+import Board.Piece;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,8 +12,8 @@ class MovingValidatorTest {
     private static Board board;
     private static MovingValidator movingValidator;
 
-    @BeforeAll
-    public static void init() {
+    @BeforeEach
+    public void init() {
         board = new Board();
         movingValidator = new MovingValidator(board);
     }
@@ -20,5 +22,52 @@ class MovingValidatorTest {
     public void testSize() {
         assertEquals(8, movingValidator.getUpperDictionary().size());
         assertEquals(8, movingValidator.getLowerDictionary().size());
+    }
+
+    @Test
+    public void testMove() {
+        try {
+            movingValidator.temptMove("wolf", false, 'U');
+            fail();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        assertEquals(movingValidator.temptMove("elephant", false, 'U'), new Coordinate(1, 4));
+        assertEquals(movingValidator.temptMove("elephant", false, 'R'), new Coordinate(2, 3));
+    }
+
+    @Test
+    public void testCapture() {
+        Piece a = movingValidator.getTargetPiece("elephant", false), b = movingValidator.getTargetPiece("wolf", false);
+        assertFalse(movingValidator.temptCapture(a, b));
+
+        b = movingValidator.getTargetPiece("wolf", true);
+        assertTrue(movingValidator.temptCapture(a, b));
+
+        b = movingValidator.getTargetPiece("elephant", true);
+        assertTrue(movingValidator.temptCapture(a, b));
+
+        a = movingValidator.getTargetPiece("rat", false);
+        b = movingValidator.getTargetPiece("elephant", true);
+        assertTrue(movingValidator.temptCapture(a, b));
+
+        a.setPosition(board.getSquare(new Coordinate(2, 4)));
+
+        b = movingValidator.getTargetPiece("rat", true);
+        assertFalse(movingValidator.temptCapture(a, b));
+
+        b.setPosition(board.getSquare(new Coordinate(2, 5)));
+        assertTrue(movingValidator.temptCapture(a, b));
+
+        b.setPosition(board.getSquare(new Coordinate(3,1)));
+        a = movingValidator.getTargetPiece("elephant", false);
+        assertTrue(movingValidator.temptCapture(a, b));
+
+        b = movingValidator.getTargetPiece("elephant", true);
+        b.setPosition(board.getSquare(new Coordinate(3,1)));
+
+        a = movingValidator.getTargetPiece("wolf", false);
+        assertTrue(movingValidator.temptCapture(a, b));
+
     }
 }

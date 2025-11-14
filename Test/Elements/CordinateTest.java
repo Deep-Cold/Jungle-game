@@ -18,14 +18,14 @@ class CoordinateTest {
     public void testMoveX() {
         origin.changeX(-5);
         destination = new Coordinate(-5,0);
-        assertTrue(origin.equals(destination));
+        assertEquals(origin, destination);
     }
 
     @Test
     public void testMoveY() {
         origin.changeY(5);
         destination = new Coordinate(0,5);
-        assertTrue(origin.equals(destination));
+        assertEquals(origin, destination);
     }
 
     @Test

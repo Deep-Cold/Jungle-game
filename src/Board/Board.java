@@ -133,4 +133,7 @@ public class Board {
     public boolean inDen(boolean side) {
         return getSquare(side ? upperPlayerDen : lowerPlayerDen).getPiece() != null;
     }
+
+    // for test only
+    
 }

@@ -32,7 +32,10 @@ public class MovingValidator {
     }
 
     public boolean temptCapture(Piece attacker, Piece defender) {
-        if((attacker.getPosition().getType() == SquareType.River ^ defender.getPosition().getType() == SquareType.River)) {
+        if(attacker.getBelongs() == defender.getBelongs()) {
+            return false;
+        }
+        if(((attacker.getPosition().getType() == SquareType.River) == (defender.getPosition().getType() == SquareType.River))) {
             if(defender.getPosition().getType() == SquareType.Trap) {
                 return true;
             } else {
@@ -55,6 +58,10 @@ public class MovingValidator {
     public Coordinate temptMove(String name, boolean turn, char direction) {
         Piece curPiece = (Piece) (turn ? upperPlayerPieces.get(name) : lowerPlayerPieces.get(name));
 
+        if(!curPiece.getStatus()) {
+            throw new IllegalArgumentException("You can not a piece that has been captured");
+        }
+
         Coordinate newPosition = new Coordinate(curPiece.getPosition().getCoordinate());
         newPosition.moveByChar(direction);
 
@@ -70,18 +77,18 @@ public class MovingValidator {
 
         if(curSquare.getType() == SquareType.River) {
             if(curPiece.getType() == PieceType.Rat) {
-                if(curSquare.getPiece() != null) {
-                    if(temptCapture(curPiece, curSquare.getPiece())) {
-                        return newPosition;
-                    } else {
-                        if(curPiece.getBelongs() == curSquare.getPiece().getBelongs()) {
-                            throw new IllegalArgumentException("The target square have another your piece");
-                        }
-                        throw new IllegalArgumentException("You can not capture target piece!");
-                    }
-                } else {
+                if(curSquare.getPiece() == null) {
                     return newPosition;
                 }
+                if(temptCapture(curPiece, curSquare.getPiece())) {
+                    return newPosition;
+                } else {
+                    if(curPiece.getBelongs() == curSquare.getPiece().getBelongs()) {
+                        throw new IllegalArgumentException("The target square have another your piece");
+                    }
+                    throw new IllegalArgumentException("You can not capture target piece!");
+                }
+
             } else if(curPiece.getType() == PieceType.Lion || curPiece.getType() == PieceType.Tiger) {
                 while(newPosition.checkBound(board.getLength(), board.getWidth())) {
                     curSquare = board.getSquare(newPosition);
@@ -103,8 +110,13 @@ public class MovingValidator {
                     }
                     newPosition.moveByChar(direction);
                 }
+            } else {
+                throw new IllegalArgumentException("You can not place move this piece to a river matrix!");
             }
         } else {
+            if(curSquare.getPiece() == null) {
+                return newPosition;
+            }
             if(temptCapture(curPiece, curSquare.getPiece())) {
                 return newPosition;
             } else {
@@ -114,6 +126,7 @@ public class MovingValidator {
                 throw new IllegalArgumentException("You can not capture target piece!");
             }
         }
+
         return null;
     }
 

@@ -34,8 +34,12 @@ public class Coordinate {
         return x > 0 && x <= boundX && y > 0 && y <= boundY;
     }
 
-    public boolean equals(Coordinate target) {
-        return x == target.getX() && y == target.getY();
+    public boolean equals(Object obj) {
+        if(obj instanceof Coordinate target) {
+            return x == target.getX() && y == target.getY();
+        } else {
+            return false;
+        }
     }
 
     public void moveByChar(char direction) {
@@ -47,11 +51,16 @@ public class Coordinate {
                 changeX(1);
                 break;
             case 'U':
-                changeY(-1);
-                break;
-            case 'D':
                 changeY(1);
                 break;
+            case 'D':
+                changeY(-1);
+                break;
         }
+    }
+
+    // For testing only
+    public String toString() {
+        return "(" + x + ", " + y + ")";
     }
 }

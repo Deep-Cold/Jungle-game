@@ -36,6 +36,11 @@ public class Piece {
         curPosition = null;
     }
 
+    public void setAlive(Square position) {
+        status = true;
+        position.setPiece(this);
+    }
+
     public Square getPosition() {
         return curPosition;
     }
