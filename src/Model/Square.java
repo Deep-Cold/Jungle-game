@@ -1,10 +1,7 @@
-package Board;
+package Model;
 
 import Elements.Coordinate;
-import Elements.PieceType;
 import Elements.SquareType;
-
-import java.lang.annotation.ElementType;
 
 public class Square {
     private Coordinate coordinate;

@@ -1,6 +1,6 @@
 package Controller;
 
-import Board.*;
+import Model.*;
 import Elements.*;
 
 import java.util.HashMap;
@@ -9,6 +9,7 @@ public class MovingValidator {
     private final HashMap<String, Piece> upperPlayerPieces;
     private final HashMap<String, Piece> lowerPlayerPieces;
     private final Board board;
+    private final char[] directions = {'U', 'D', 'L', 'R'};
 
     public MovingValidator(Board _board) {
         board = _board;
@@ -51,7 +52,7 @@ public class MovingValidator {
             // 3. Trap rule:
             //    If the defender is standing in a trap of the attacker,
             //    then the attacker can always capture it regardless of rank.
-            if(defender.getPosition().getType() == SquareType.Trap) {
+            if(defender.getPosition().getType() == SquareType.Trap && ((SpecialSquare)defender.getPosition()).getSide() != defender.getBelongs()) {
                 return true;
             } else {
                 // 4. Normal capture rule:
@@ -165,6 +166,8 @@ public class MovingValidator {
                                 // Opponent piece but not legally capturable.
                                 throw new IllegalArgumentException("You can not capture target piece!");
                             }
+                        } else {
+                            return curSquare.getCoordinate();
                         }
                     }
                     newPosition.moveByChar(direction);
@@ -195,6 +198,18 @@ public class MovingValidator {
         // In normal situations we should either have returned a Coordinate or thrown.
         // Reaching here typically means the Lion/Tiger river‑jump loop ran off the board.
         return null;
+    }
+
+    public boolean haveValidMove(boolean turn) {
+        for(PieceType x : PieceType.values()) {
+            for(char c : directions) {
+                try {
+                    attemptMove(x.toString(), turn, c);
+                    return true;
+                } catch(Exception ignored) {}
+            }
+        }
+        return false;
     }
 
     // For testing only

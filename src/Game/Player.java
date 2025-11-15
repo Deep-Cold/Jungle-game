@@ -2,7 +2,9 @@ package Game;
 
 import Controller.Utils;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private final String name;
     private int numOfRemainPieces;
 

@@ -1,7 +1,6 @@
-package Board;
+package Model;
 
 import Elements.PieceType;
-import Elements.SquareType;
 
 public class Piece {
     private final PieceType type;
@@ -36,9 +35,8 @@ public class Piece {
         curPosition = null;
     }
 
-    public void setAlive(Square position) {
+    public void setAlive() {
         status = true;
-        position.setPiece(this);
     }
 
     public Square getPosition() {

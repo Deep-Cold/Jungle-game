@@ -1,4 +1,4 @@
-package Board;
+package Model;
 
 import Controller.MovingValidator;
 import Elements.*;
@@ -127,6 +127,16 @@ public class Board {
         return true;
     }
 
+    public boolean checkDen(boolean turn) {
+        if(turn && getSquare(upperPlayerDen).getPiece() != null) {
+            return true;
+        }
+        return !turn && getSquare(lowerPlayerDen).getPiece() != null;
+    }
+
+    public boolean haveValidMove(boolean turn) {
+        return movingValidator.haveValidMove(turn);
+    }
     /*
         side should be 0 for lower player
      */

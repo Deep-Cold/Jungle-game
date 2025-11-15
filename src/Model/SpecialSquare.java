@@ -1,4 +1,4 @@
-package Board;
+package Model;
 
 import Elements.Coordinate;
 import Elements.SquareType;

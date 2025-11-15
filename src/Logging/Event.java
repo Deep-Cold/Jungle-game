@@ -1,7 +1,7 @@
 package Logging;
 
-import Board.Piece;
-import Board.Board;
+import Model.Piece;
+import Model.Board;
 import Elements.Coordinate;
 import Game.Game;
 
@@ -29,6 +29,9 @@ public abstract class Event {
     }
 
     public abstract void drawBack();
+
+    public abstract void run();
+
 }
 
 class Captured extends Event {
@@ -37,7 +40,8 @@ class Captured extends Event {
     }
     public void drawBack() {
         Board curBoard = super.getBelGame().getBoard();
-        super.getTargetPiece().setAlive(curBoard.getSquare(super.getOriginalCoordinate()));
+        super.getTargetPiece().setAlive();
+        curBoard.getSquare(super.getOriginalCoordinate()).setPiece(super.getTargetPiece());
     }
 }
 
@@ -55,6 +59,10 @@ class Move extends Event {
             throw new IllegalCallerException("You can not drawBack a unsuccessful move");
         }
         Board curBoard = super.getBelGame().getBoard();
-
+        curBoard.getSquare(targetCoordinate).setPiece(null);
+        curBoard.getSquare(super.getOriginalCoordinate()).setPiece(super.getTargetPiece());
     }
+
 }
+
+class  extends Event {}

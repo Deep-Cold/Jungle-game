@@ -1,18 +1,26 @@
 package Game;
 
-import Board.Board;
+import Model.Board;
 
-public class Game {
-    private final Board board;
+import java.io.Serializable;
+
+public class Game implements Serializable {
+    private final Board board, originalBoard;
     private final Player upperPlayer, lowerPlayer;
+    private boolean currentTure = false; // false means lowerPlayer
 
     public Game() {
         board = new Board();
+        originalBoard = new Board();
         upperPlayer = new Player();
         lowerPlayer = new Player();
     }
 
-    public void save() {
+    public void saveGame() {
+
+    }
+
+    public void saveReplay() {
 
     }
 

@@ -1,9 +1,7 @@
-package Board;
+package Model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import Elements.PieceType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +21,10 @@ class BoardTest {
 
         assertTrue(board.temptMove("elephant", false, 'U'));
         assertFalse(board.temptMove("elephant", false, 'R'));
+
+        assertTrue(board.temptMove("lion", false, 'L'));
+        assertTrue(board.temptMove("lion", false, 'L'));
+        assertFalse(board.temptMove("lion", false, 'L'));
     }
 
     @Test
@@ -44,6 +46,19 @@ class BoardTest {
         assertTrue(board.temptMove("rat", false, 'U'));
         assertTrue(board.temptMove("rat", false, 'U'));
         assertTrue(board.temptMove("rat", false, 'U'));
-
+        assertTrue(board.temptMove("elephant", true, 'L'));
+        assertFalse(board.temptMove("rat", false, 'U'));
     }
+
+    @Test
+    public void testMoving4() {
+        assertTrue(board.temptMove("leopard", false, 'L'));
+        assertTrue(board.temptMove("leopard", false, 'U'));
+        assertTrue(board.temptMove("leopard", false, 'U'));
+        assertTrue(board.temptMove("leopard", false, 'U'));
+        assertTrue(board.temptMove("leopard", false, 'U'));
+        assertTrue(board.temptMove("leopard", false, 'U'));
+        assertTrue(board.temptMove("leopard", false, 'U'));
+    }
+
 }

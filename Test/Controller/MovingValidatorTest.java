@@ -3,8 +3,8 @@ package Controller;
 import Elements.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import Board.Board;
-import Board.Piece;
+import Model.Board;
+import Model.Piece;
 
 import static org.junit.jupiter.api.Assertions.*;
 
