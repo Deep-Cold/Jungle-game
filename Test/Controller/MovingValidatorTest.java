@@ -39,35 +39,35 @@ class MovingValidatorTest {
     @Test
     public void testCapture() {
         Piece a = movingValidator.getTargetPiece("elephant", false), b = movingValidator.getTargetPiece("wolf", false);
-        assertFalse(movingValidator.temptCapture(a, b));
+        assertFalse(movingValidator.attemptCapture(a, b));
 
         b = movingValidator.getTargetPiece("wolf", true);
-        assertTrue(movingValidator.temptCapture(a, b));
+        assertTrue(movingValidator.attemptCapture(a, b));
 
         b = movingValidator.getTargetPiece("elephant", true);
-        assertTrue(movingValidator.temptCapture(a, b));
+        assertTrue(movingValidator.attemptCapture(a, b));
 
         a = movingValidator.getTargetPiece("rat", false);
         b = movingValidator.getTargetPiece("elephant", true);
-        assertTrue(movingValidator.temptCapture(a, b));
+        assertTrue(movingValidator.attemptCapture(a, b));
 
         a.setPosition(board.getSquare(new Coordinate(2, 4)));
 
         b = movingValidator.getTargetPiece("rat", true);
-        assertFalse(movingValidator.temptCapture(a, b));
+        assertFalse(movingValidator.attemptCapture(a, b));
 
         b.setPosition(board.getSquare(new Coordinate(2, 5)));
-        assertTrue(movingValidator.temptCapture(a, b));
+        assertTrue(movingValidator.attemptCapture(a, b));
 
         b.setPosition(board.getSquare(new Coordinate(3,1)));
         a = movingValidator.getTargetPiece("elephant", false);
-        assertTrue(movingValidator.temptCapture(a, b));
+        assertTrue(movingValidator.attemptCapture(a, b));
 
         b = movingValidator.getTargetPiece("elephant", true);
         b.setPosition(board.getSquare(new Coordinate(3,1)));
 
         a = movingValidator.getTargetPiece("wolf", false);
-        assertTrue(movingValidator.temptCapture(a, b));
+        assertTrue(movingValidator.attemptCapture(a, b));
 
     }
 }
