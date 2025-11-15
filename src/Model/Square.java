@@ -3,7 +3,9 @@ package Model;
 import Elements.Coordinate;
 import Elements.SquareType;
 
-public class Square {
+import java.io.Serializable;
+
+public class Square implements Serializable {
     private Coordinate coordinate;
     private SquareType type;
     private Piece currentPiece;

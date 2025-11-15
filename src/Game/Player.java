@@ -1,7 +1,5 @@
 package Game;
 
-import Controller.Utils;
-
 import java.io.Serializable;
 
 public class Player implements Serializable {

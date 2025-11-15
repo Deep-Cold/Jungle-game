@@ -2,7 +2,9 @@ package Model;
 
 import Elements.PieceType;
 
-public class Piece {
+import java.io.Serializable;
+
+public class Piece implements Serializable {
     private final PieceType type;
     private Square curPosition;
     private boolean status; // 0 for died, 1 for alive

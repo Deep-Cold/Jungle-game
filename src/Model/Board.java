@@ -10,7 +10,7 @@ public class Board implements Serializable {
     private Square[][] board;
     private Coordinate lowerPlayerDen, upperPlayerDen;
     private final MovingValidator movingValidator;
-    private final Logger logger;
+    private Logger logger;
 
 
     public Board() {
@@ -98,6 +98,17 @@ public class Board implements Serializable {
 
     public int getWidth() {
         return width;
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public void setLogger(Logger logger) {
+        if(logger == null) {
+            throw new NullPointerException();
+        }
+        this.logger = logger;
     }
 
     public Square getSquare(Coordinate c) {

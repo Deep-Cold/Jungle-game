@@ -2,9 +2,10 @@ package Model;
 
 import Elements.*;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class MovingValidator {
+public class MovingValidator implements Serializable {
     private final HashMap<String, Piece> upperPlayerPieces;
     private final HashMap<String, Piece> lowerPlayerPieces;
     private final Board board;
