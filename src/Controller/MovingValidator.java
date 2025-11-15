@@ -45,9 +45,8 @@ public class MovingValidator {
         }
 
         // 2. River / land constraint:
-        //    - If both pieces are on river squares OR both are on non‑river squares,
-        //      we may be able to capture.
-        //    - If one is on river and the other is on land, capturing is not allowed.
+        //    - Must be both on land or both on river (True/True, False/False)  
+        //    - Otherwise capturing is not allowed.
         if(((attacker.getPosition().getType() == SquareType.River) == (defender.getPosition().getType() == SquareType.River))) {
             // 3. Trap rule:
             //    If the defender is standing in a trap of the attacker,
@@ -81,7 +80,7 @@ public class MovingValidator {
     /*
         turn should be 0 if this is the lower player's turn
      */
-    public Coordinate temptMove(String name, boolean turn, char direction) {
+    public Coordinate attemptMove(String name, boolean turn, char direction) {
         // Determine which player's piece we are moving based on `turn`.
         // turn == false → lower player's turn
         // turn == true  → upper player's turn

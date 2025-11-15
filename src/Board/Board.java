@@ -108,7 +108,7 @@ public class Board {
     public boolean temptMove(String name, boolean turn, char direction) {
         Coordinate newCoordinate;
         try {
-            newCoordinate = movingValidator.temptMove(name, turn, direction);
+            newCoordinate = movingValidator.attemptMove(name, turn, direction);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return false;

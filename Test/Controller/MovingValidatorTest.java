@@ -27,13 +27,13 @@ class MovingValidatorTest {
     @Test
     public void testMove() {
         try {
-            movingValidator.temptMove("wolf", false, 'U');
+            movingValidator.attemptMove("wolf", false, 'U');
             fail();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        assertEquals(movingValidator.temptMove("elephant", false, 'U'), new Coordinate(1, 4));
-        assertEquals(movingValidator.temptMove("elephant", false, 'R'), new Coordinate(2, 3));
+        assertEquals(movingValidator.attemptMove("elephant", false, 'U'), new Coordinate(1, 4));
+        assertEquals(movingValidator.attemptMove("elephant", false, 'R'), new Coordinate(2, 3));
     }
 
     @Test
