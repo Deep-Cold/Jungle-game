@@ -1,17 +1,22 @@
 package Model;
 
-import Controller.MovingValidator;
 import Elements.*;
+import Model.Logging.*;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable {
     private int length, width;
     private Square[][] board;
     private Coordinate lowerPlayerDen, upperPlayerDen;
     private final MovingValidator movingValidator;
+    private final Logger logger;
+
 
     public Board() {
         setDefaultBoard();
         movingValidator = new MovingValidator(this);
+        logger = new Logger();
     }
 
     private void setDefaultBoard() {
@@ -102,10 +107,7 @@ public class Board {
         return board[c.getX()][c.getY()];
     }
 
-    /*
-        need change this function to do additional logging
-     */
-    public boolean temptMove(String name, boolean turn, char direction) {
+    public boolean attemptMove(String name, boolean turn, char direction) {
         Coordinate newCoordinate;
         try {
             newCoordinate = movingValidator.attemptMove(name, turn, direction);
@@ -118,13 +120,20 @@ public class Board {
         Square newSquare = getSquare(newCoordinate), originalSquare = curPiece.getPosition();
 
         if(newSquare.getPiece() != null) {
+            logger.addCaptured(newSquare.getCoordinate(), newSquare.getPiece(), this);
             newSquare.getPiece().setDie();
         }
+
+        logger.addMove(originalSquare.getCoordinate(), curPiece, this, true, newSquare.getCoordinate());
 
         originalSquare.setPiece(null);
         newSquare.setPiece(curPiece);
 
         return true;
+    }
+
+    public void tryWithdraw(boolean turn) {
+        logger.tryWithdraw(turn);
     }
 
     public boolean checkDen(boolean turn) {

@@ -1,4 +1,4 @@
-package Logging;
+package Model.Logging;
 
 import org.junit.jupiter.api.BeforeEach;
 

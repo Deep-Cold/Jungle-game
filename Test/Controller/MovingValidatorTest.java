@@ -1,6 +1,7 @@
 package Controller;
 
 import Elements.Coordinate;
+import Model.MovingValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import Model.Board;
