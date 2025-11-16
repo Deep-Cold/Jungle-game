@@ -1,4 +1,4 @@
-package Elements;
+package Model.Elements;
 
 import java.io.Serializable;
 
@@ -61,8 +61,7 @@ public class Coordinate implements Serializable {
         }
     }
 
-    // For testing only
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "(" + ((char)(x - 1 + 'A')) + ", " + y + ")";
     }
 }

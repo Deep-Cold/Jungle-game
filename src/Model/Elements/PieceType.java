@@ -1,4 +1,4 @@
-package Elements;
+package Model.Elements;
 
 public enum PieceType {
     Rat("rat"),

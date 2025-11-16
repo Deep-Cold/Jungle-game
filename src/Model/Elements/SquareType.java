@@ -1,4 +1,4 @@
-package Elements;
+package Model.Elements;
 
 public enum SquareType {
     Normal("normal"),

@@ -1,6 +1,6 @@
 package Model.Logging;
 
-import Elements.Coordinate;
+import Model.Elements.Coordinate;
 import Model.Board;
 import Model.Piece;
 
@@ -32,11 +32,13 @@ public class Logger implements Serializable {
     public void addCaptured(Coordinate _originalCoordinate, Piece _targetPiece, Board _belBoard) {
         Captured curEvent = new Captured(_originalCoordinate, _targetPiece, _belBoard);
         addEvent(curEvent);
+        curEvent.printMessage();
     }
 
     public void addMove(Coordinate _originalCoordinate, Piece _targetPiece, Board _belBoard, boolean _success, Coordinate _targetCoordinate) {
         Move moveEvent = new Move(_originalCoordinate, _targetPiece, _belBoard, _success, _targetCoordinate);
         addEvent(moveEvent);
+        moveEvent.printMessage();
     }
 
     public void tryWithdraw(boolean turn) {
@@ -51,7 +53,10 @@ public class Logger implements Serializable {
                 rem--;
             }
             currentEvent.withdraw();
+            currentEvent.printReverseMessage();
         }
-        addEvent(new Withdraw(turn));
+        Withdraw withdrawEvent = new Withdraw(turn);
+        addEvent(withdrawEvent);
+        withdrawEvent.printMessage();
     }
 }

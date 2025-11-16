@@ -4,27 +4,30 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
     private final String name;
-    private int numOfRemainPieces;
+    private int withdrawQuota;
 
     public Player() {
         name = Utils.getRandomString(5);
-        numOfRemainPieces = 8;
+        withdrawQuota = 3;
+    }
+
+    public int getWithdrawQuota() {
+        return withdrawQuota;
     }
 
     public Player(String _name, int _numOfRemainPieces) {
         name = _name;
-        numOfRemainPieces = _numOfRemainPieces;
+    }
+
+    public boolean checkWithdrawQuota() {
+        return withdrawQuota >= 0;
+    }
+
+    public void deductWithdrawQuota() {
+        withdrawQuota--;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void deductPiece() {
-        numOfRemainPieces--;
-    }
-
-    public boolean checkRemainPieces() {
-        return numOfRemainPieces > 0;
     }
 }

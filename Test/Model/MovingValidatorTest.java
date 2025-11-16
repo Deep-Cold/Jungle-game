@@ -1,11 +1,8 @@
-package Controller;
+package Model;
 
-import Elements.Coordinate;
-import Model.MovingValidator;
+import Model.Elements.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import Model.Board;
-import Model.Piece;
 
 import static org.junit.jupiter.api.Assertions.*;
 

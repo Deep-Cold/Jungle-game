@@ -1,6 +1,6 @@
 package Model;
 
-import Elements.PieceType;
+import Model.Elements.PieceType;
 
 import java.io.Serializable;
 

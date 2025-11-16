@@ -1,7 +1,7 @@
 package Model;
 
-import Elements.Coordinate;
-import Elements.SquareType;
+import Model.Elements.Coordinate;
+import Model.Elements.SquareType;
 
 public class SpecialSquare extends Square {
     private boolean belongs; // 0 for lower player, 1 for upper player;

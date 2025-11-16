@@ -1,6 +1,8 @@
 package Model;
 
-import Elements.*;
+import Model.Elements.Coordinate;
+import Model.Elements.PieceType;
+import Model.Elements.SquareType;
 import Model.Logging.*;
 
 import java.io.Serializable;

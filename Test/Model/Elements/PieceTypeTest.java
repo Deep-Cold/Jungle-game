@@ -1,5 +1,6 @@
-package Elements;
+package Model.Elements;
 
+import Model.Elements.PieceType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

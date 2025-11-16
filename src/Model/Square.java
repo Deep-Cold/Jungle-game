@@ -1,7 +1,7 @@
 package Model;
 
-import Elements.Coordinate;
-import Elements.SquareType;
+import Model.Elements.Coordinate;
+import Model.Elements.SquareType;
 
 import java.io.Serializable;
 

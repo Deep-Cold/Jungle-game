@@ -2,9 +2,11 @@ package Model.Logging;
 
 import Model.Piece;
 import Model.Board;
-import Elements.Coordinate;
+import Model.Elements.Coordinate;
 
-public class Event {
+import java.io.Serializable;
+
+public abstract class Event implements Serializable {
     private final EventType type;
     public Event(EventType type) {
         this.type = type;
@@ -13,6 +15,9 @@ public class Event {
     public EventType getType() {
         return type;
     }
+
+    public abstract void printMessage();
+    public abstract void printReverseMessage();
 }
 
 abstract class MoveEvent extends Event {
@@ -40,6 +45,7 @@ abstract class MoveEvent extends Event {
     }
 
     public abstract void withdraw();
+    public abstract void run();
 
 }
 
@@ -52,6 +58,17 @@ class Captured extends MoveEvent {
         super.getTargetPiece().setAlive();
         curBoard.getSquare(super.getOriginalCoordinate()).setPiece(super.getTargetPiece());
     }
+    public void run() {
+        Board curBoard = super.getBoard();
+        curBoard.getSquare(super.getOriginalCoordinate()).setPiece(null);
+        super.getTargetPiece().setDie();
+    }
+    public void printMessage() {
+        System.out.println("- " + getOriginalCoordinate() + " " + getTargetPiece().getType());
+    }
+    public void printReverseMessage() {
+        System.out.println("+ " + getOriginalCoordinate() + " " + getTargetPiece().getType());
+    }
 }
 
 class Move extends MoveEvent {
@@ -62,7 +79,6 @@ class Move extends MoveEvent {
         success = _success;
         targetCoordinate = _targetCoordinate;
     }
-
     public void withdraw() {
         if(!success) {
             throw new IllegalCallerException("You can not withdraw a unsuccessful move");
@@ -70,6 +86,17 @@ class Move extends MoveEvent {
         Board curBoard = super.getBoard();
         curBoard.getSquare(targetCoordinate).setPiece(null);
         curBoard.getSquare(super.getOriginalCoordinate()).setPiece(super.getTargetPiece());
+    }
+    public void run() {
+        Board curBoard = super.getBoard();
+        curBoard.getSquare(super.getOriginalCoordinate()).setPiece(null);
+        curBoard.getSquare(targetCoordinate).setPiece(super.getTargetPiece());
+    }
+    public void printMessage() {
+        System.out.println(getTargetPiece().getType() + " : " + getOriginalCoordinate() + " -> " + targetCoordinate);
+    }
+    public void printReverseMessage() {
+        System.out.println(getTargetPiece().getType() + " : " + targetCoordinate + " -> " + getOriginalCoordinate());
     }
 }
 
@@ -81,5 +108,12 @@ class Withdraw extends Event {
     }
     public boolean getTurn() {
         return turn;
+    }
+
+    public void printMessage() {
+        System.out.println("+ Withdraw");
+    }
+    public void printReverseMessage() {
+        System.out.println("- Withdraw");
     }
 }
