@@ -12,12 +12,16 @@ public class Logger implements Serializable {
     private final Stack<MoveEvent> curStack;
     private final ArrayList<Event> allEvents;
     private int moveCounter;
+
+    // For replay
+    private Stack<MoveEvent> reverseStack;
+    private int curPointer;
+
     public Logger() {
         curStack = new Stack<>();
         allEvents = new ArrayList<>();
         moveCounter = 0;
     }
-
 
     private void addEvent(Event event) {
         allEvents.add(event);
@@ -54,9 +58,99 @@ public class Logger implements Serializable {
             }
             currentEvent.withdraw();
             currentEvent.printReverseMessage();
+            if(rem == 0 && curStack.peek() instanceof Captured) {
+                currentEvent = curStack.pop();
+                currentEvent.withdraw();
+                currentEvent.printReverseMessage();
+            }
         }
         Withdraw withdrawEvent = new Withdraw(turn);
         addEvent(withdrawEvent);
         withdrawEvent.printMessage();
+    }
+
+    // For replay
+    public void initReplay() {
+        reverseStack = new Stack<>();
+        curPointer = 0;
+        while(!curStack.isEmpty()) {
+            curStack.pop().withdraw();
+        }
+    }
+
+    // Must call initReplay before use, true for need swap role
+    public boolean nextStep() {
+        if(curPointer == allEvents.size()) {
+            throw new IllegalStateException("This is the last step");
+        }
+        Event curEvent = allEvents.get(curPointer);
+        curEvent.printMessage();
+        if(curEvent instanceof Move) {
+            curStack.push((MoveEvent) allEvents.get(curPointer));
+            ((MoveEvent) curEvent).run();
+            return true;
+        } else if(curEvent instanceof Captured) {
+            curStack.push((Captured) allEvents.get(curPointer));
+            ((Captured) curEvent).run();
+            curPointer++;
+            curEvent = allEvents.get(curPointer);
+            curEvent.printMessage();
+            curStack.push((MoveEvent) allEvents.get(curPointer));
+            ((MoveEvent) curEvent).run();
+            return true;
+        } else if(curEvent instanceof Withdraw) {
+            int rem = 2;
+            while(rem > 0) {
+                MoveEvent currentEvent = curStack.pop();
+                if(currentEvent instanceof Move) {
+                    rem--;
+                }
+                currentEvent.withdraw();
+                currentEvent.printReverseMessage();
+                if(rem == 0 && curStack.peek() instanceof Captured) {
+                    currentEvent = curStack.pop();
+                    currentEvent.withdraw();
+                    currentEvent.printReverseMessage();
+                }
+            }
+            return false;
+        }
+        curPointer++;
+        return false;
+    }
+
+    public boolean previousStep() {
+        if(curPointer == 0) {
+            throw new IllegalStateException("This is the original state");
+        }
+        curPointer--;
+        Event curEvent = allEvents.get(curPointer);
+        curEvent.printReverseMessage();
+        if(curEvent instanceof Move) {
+            curStack.pop();
+            ((MoveEvent) curEvent).withdraw();
+            if(curPointer > 0 && allEvents.get(curPointer - 1) instanceof Captured) {
+                curPointer--;
+                curStack.peek().withdraw();
+                curStack.pop().printReverseMessage();
+            }
+            return true;
+        } else if(curEvent instanceof Captured) {
+            curStack.pop();
+            ((Captured) curEvent).withdraw();
+            return true;
+        } else if(curEvent instanceof Withdraw) {
+            int rem = 2;
+            while(rem > 0) {
+                MoveEvent currentEvent = reverseStack.pop();
+                if(currentEvent instanceof Move) {
+                    rem--;
+                }
+                currentEvent.run();
+                currentEvent.printMessage();
+            }
+            return false;
+        }
+        return false;
     }
 }

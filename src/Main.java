@@ -1,9 +1,10 @@
 import java.util.Scanner;
-import Game.Game;
+import Pages.Game.Game;
+import Pages.Loading.LoadGame;
+import Pages.Loading.LoadReplay;
 
 public class Main {
     private static final Scanner sc = new Scanner(System.in);
-    private static Game currentGame;
     private static void printWelcome() {
         System.out.println("Welcome to Jungle Game v1.0!");
     }
@@ -11,28 +12,33 @@ public class Main {
         printWelcome();
         while(true) {
             System.out.flush();
+            System.out.println();
+            System.out.println("Main Menu");
             System.out.print("> ");
             String command = sc.nextLine();
             String[] arr = command.split("\\s+");
             if(arr.length == 0) {
                 continue;
             }
-            switch (arr[0]) {
-                case "startNewGame":
-                    currentGame = Game.newGame();
+            Game currentGame;
+            if(arr.length > 1) {
+                System.out.print("Too many arguments, please enter again");
+                continue;
+            }
+            if(arr[0].equalsIgnoreCase("startNewGame")) {
+                currentGame = Game.newGame();
+                currentGame.startGame();
+            } else if(arr[0].equalsIgnoreCase("loadGame")) {
+                currentGame = LoadGame.mainLoop();
+                if(currentGame != null) {
                     currentGame.startGame();
-                    break;
-                case "watchRelay":
-                    break;
-                case "continueGame":
-                    break;
-                case "quit":
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Invalid command");
-                    break;
-
+                }
+            } else if(arr[0].equalsIgnoreCase("watchReplay")) {
+                LoadReplay.mainLoop();
+            } else if(arr[0].equalsIgnoreCase("exit")) {
+                break;
+            } else {
+                System.out.println("Invalid command");
             }
         }
     }

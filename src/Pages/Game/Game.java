@@ -1,14 +1,15 @@
-package Game;
+package Pages.Game;
 
-import Display.Display;
+import Pages.Display.Display;
 import Model.Board;
+import Pages.Replay.Replay;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Game implements Serializable {
-    private final Board board, originalBoard;
+    private final Board board;
     private final Player upperPlayer, lowerPlayer;
     private boolean currentTurn = false; // false means lowerPlayer
     private boolean isActive;
@@ -20,7 +21,6 @@ public class Game implements Serializable {
     
     private Game() {
         board = new Board();
-        originalBoard = new Board();
         upperPlayer = new Player();
         lowerPlayer = new Player();
         isActive = true;
@@ -35,9 +35,9 @@ public class Game implements Serializable {
             throw new IllegalArgumentException("Illegal filename format");
         }
         try {
-            FileOutputStream fos = new FileOutputStream("./archive" + filename + ".jungle");
+            FileOutputStream fos = new FileOutputStream("./archive/" + filename + ".jungle");
             ObjectOutputStream out = new ObjectOutputStream(fos);
-            System.out.println("Saving game to " + "./archive" + filename + ".jungle");
+            System.out.println("Saving game to " + "./archive/" + filename + ".jungle");
             out.writeObject(this);
             out.close();
             fos.close();
@@ -50,8 +50,6 @@ public class Game implements Serializable {
     
     public void closeGame() {
         isActive = false;
-        saveReplay(String.valueOf(LocalDateTime.now()).replace(':', '-'));
-        saveGame(String.valueOf(LocalDateTime.now()).replace(':', '-'));
     }
     
     public void saveReplay(String filename) {
@@ -62,8 +60,7 @@ public class Game implements Serializable {
         if(!filename.matches("^[a-zA-Z0-9. _-]+$")) {
             throw new IllegalArgumentException("Illegal filename format");
         }
-        originalBoard.setLogger(board.getLogger());
-        Replay curReplay = new Replay(originalBoard, lowerPlayer.getName(), upperPlayer.getName());
+        Replay curReplay = new Replay(board, lowerPlayer.getName(), upperPlayer.getName());
         try {
             FileOutputStream fos = new FileOutputStream("./replay/" + filename + ".replay");
             ObjectOutputStream out = new ObjectOutputStream(fos);

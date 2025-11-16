@@ -1,4 +1,4 @@
-package Display;
+package Pages.Display;
 
 import Model.Board;
 import Model.Piece;

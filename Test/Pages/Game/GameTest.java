@@ -1,6 +1,7 @@
-package Game;
+package Pages.Game;
 
 import Model.Board;
+import Pages.Game.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

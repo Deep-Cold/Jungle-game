@@ -102,17 +102,6 @@ public class Board implements Serializable {
         return width;
     }
 
-    public Logger getLogger() {
-        return logger;
-    }
-
-    public void setLogger(Logger logger) {
-        if(logger == null) {
-            throw new NullPointerException();
-        }
-        this.logger = logger;
-    }
-
     public Square getSquare(Coordinate c) {
         if(!c.checkBound(getLength(), getWidth())) {
             throw new IndexOutOfBoundsException();
@@ -147,6 +136,10 @@ public class Board implements Serializable {
 
     public void tryWithdraw(boolean turn) {
         logger.tryWithdraw(turn);
+    }
+
+    public Logger getLogger() {
+        return logger;
     }
 
     public boolean checkDen(boolean turn) {

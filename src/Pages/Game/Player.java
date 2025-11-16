@@ -1,4 +1,4 @@
-package Game;
+package Pages.Game;
 
 import java.io.Serializable;
 
