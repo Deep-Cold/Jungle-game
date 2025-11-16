@@ -40,7 +40,7 @@ public class Logger implements Serializable {
     }
 
     public void addMove(Coordinate _originalCoordinate, Piece _targetPiece, Board _belBoard, boolean _success, Coordinate _targetCoordinate) {
-        Move moveEvent = new Move(_originalCoordinate, _targetPiece, _belBoard, _success, _targetCoordinate);
+        Move moveEvent = new Move(_originalCoordinate, _targetPiece, _belBoard, _targetCoordinate);
         addEvent(moveEvent);
         moveEvent.printMessage();
     }
@@ -58,7 +58,7 @@ public class Logger implements Serializable {
             }
             currentEvent.withdraw();
             currentEvent.printReverseMessage();
-            if(rem == 0 && curStack.peek() instanceof Captured) {
+            if(rem == 0 && !curStack.empty() && curStack.peek() instanceof Captured) {
                 currentEvent = curStack.pop();
                 currentEvent.withdraw();
                 currentEvent.printReverseMessage();
@@ -155,5 +155,10 @@ public class Logger implements Serializable {
             return false;
         }
         return false;
+    }
+
+    // for testing only
+    public int getStackSize() {
+        return curStack.size();
     }
 }

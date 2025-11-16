@@ -12,10 +12,6 @@ public abstract class Event implements Serializable {
         this.type = type;
     }
 
-    public EventType getType() {
-        return type;
-    }
-
     public abstract void printMessage();
     public abstract void printReverseMessage();
 }
@@ -71,18 +67,13 @@ class Captured extends MoveEvent {
     }
 }
 
-class Move extends MoveEvent {
-    private final boolean success; // True for success
+class Move extends MoveEvent { // True for success
     private final Coordinate targetCoordinate;
-    public Move(Coordinate _originalCoordinate, Piece _targetPiece, Board _belBoard, boolean _success, Coordinate _targetCoordinate) {
+    public Move(Coordinate _originalCoordinate, Piece _targetPiece, Board _belBoard, Coordinate _targetCoordinate) {
         super(_originalCoordinate, _targetPiece, _belBoard, EventType.Move);
-        success = _success;
         targetCoordinate = _targetCoordinate;
     }
     public void withdraw() {
-        if(!success) {
-            throw new IllegalCallerException("You can not withdraw a unsuccessful move");
-        }
         Board curBoard = super.getBoard();
         curBoard.getSquare(targetCoordinate).setPiece(null);
         curBoard.getSquare(super.getOriginalCoordinate()).setPiece(super.getTargetPiece());

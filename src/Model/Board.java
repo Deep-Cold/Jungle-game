@@ -124,6 +124,7 @@ public class Board implements Serializable {
         if(newSquare.getPiece() != null) {
             logger.addCaptured(newSquare.getCoordinate(), newSquare.getPiece(), this);
             newSquare.getPiece().setDie();
+            newSquare.setPiece(null);
         }
 
         logger.addMove(originalSquare.getCoordinate(), curPiece, this, true, newSquare.getCoordinate());
@@ -160,5 +161,7 @@ public class Board implements Serializable {
     }
 
     // for test only
-    
+    public MovingValidator getMovingValidator() {
+        return movingValidator;
+    }
 }

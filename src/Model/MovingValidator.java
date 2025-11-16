@@ -134,7 +134,7 @@ public class MovingValidator implements Serializable {
                 }
 
             // Case 2: Lion / Tiger may "jump" over an entire river.
-            } else if(curPiece.getType() == PieceType.Lion || curPiece.getType() == PieceType.Tiger) {
+            } else if(curPiece.getType().canLeap()) {
                 // We keep moving in the same direction as long as we are within bounds.
                 // The idea is:
                 //   - All intermediate river squares must be empty (no Rats blocking).
