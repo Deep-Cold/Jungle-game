@@ -61,6 +61,8 @@ public class Replay implements Serializable {
                 }
             } else if(arr[0].equalsIgnoreCase("exit")) {
                 break;
+            } else {
+                System.out.println("Unknown command");
             }
         }
     }

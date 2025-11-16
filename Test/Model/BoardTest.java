@@ -29,6 +29,21 @@ class BoardTest {
         assertFalse(board.attemptMove("lion", false, 'L'));
     }
 
+
+    @Test
+    public void waterAttack() {
+        assertTrue(board.attemptMove("rat", false, 'L'));
+        assertTrue(board.attemptMove("rat", false, 'U'));
+        assertTrue(board.attemptMove("rat", false, 'L'));
+        assertTrue(board.attemptMove("rat", false, 'L'));
+        assertTrue(board.attemptMove("rat", false, 'L'));
+        assertTrue(board.attemptMove("rat", true, 'D'));
+        assertTrue(board.attemptMove("rat", true, 'R'));
+        assertTrue(board.attemptMove("rat", true, 'R'));
+        assertTrue(board.attemptMove("rat", true, 'D'));
+        assertTrue(board.attemptMove("rat", true, 'D'));
+    }
+
     @Test
     public void testMoving2() {
         assertTrue(board.attemptMove("elephant", false, 'U'));
@@ -215,6 +230,20 @@ class BoardTest {
         assertTrue(board.attemptMove("rat", false, 'U'));
         assertTrue(board.attemptMove("dog", false, 'U'));
         assertFalse(board.attemptMove("rat", false, 'D'));
+
+        assertTrue(board.attemptMove("rat", false, 'L'));
+        assertTrue(board.attemptMove("rat", false, 'L'));
+        assertTrue(board.attemptMove("rat", false, 'L'));
+        assertTrue(board.attemptMove("rat", false, 'L'));
+
+        assertTrue(board.attemptMove("rat", false, 'U'));
+        assertTrue(board.attemptMove("rat", false, 'U'));
+
+        assertTrue(board.attemptMove("rat", true, 'R'));
+        assertFalse(board.attemptMove("rat", true, 'D'));
+
+
+
     }
 
     @Test

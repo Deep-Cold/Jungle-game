@@ -97,14 +97,11 @@ class Withdraw extends Event {
         super(EventType.Withdraw);
         turn = _turn;
     }
-    public boolean getTurn() {
-        return turn;
-    }
 
     public void printMessage() {
-        System.out.println("+ Withdraw");
+        System.out.println(turn ? "upperPlayer" : "lowerPlayer" + " + Withdraw");
     }
     public void printReverseMessage() {
-        System.out.println("- Withdraw");
+        System.out.println(turn ? "upperPlayer" : "lowerPlayer" + " - Withdraw");
     }
 }

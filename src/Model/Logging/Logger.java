@@ -120,7 +120,6 @@ public class Logger implements Serializable {
             curPointer++;
             return false;
         }
-        curPointer++;
         return false;
     }
 
@@ -138,11 +137,8 @@ public class Logger implements Serializable {
                 curStack.pop().withdraw();
             }
             return true;
-        } else if(curEvent instanceof Captured) {
-            curStack.pop();
-            ((Captured) curEvent).withdraw();
-            return true;
         } else if(curEvent instanceof Withdraw) {
+            curEvent.printReverseMessage();
             int rem = 2;
             while(rem > 0) {
                 curStack.push(reverseStack.peek());

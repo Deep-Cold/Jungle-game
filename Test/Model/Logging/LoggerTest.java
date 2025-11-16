@@ -89,15 +89,55 @@ class LoggerTest {
 
     @Test
     public void testPreviousStep() {
-        board.attemptMove("rat", false, 'L');
-        
-        logger.initReplay();
-        logger.nextStep();
-        
+        board.attemptMove("leopard", false, 'L');
+        board.attemptMove("rat", true, 'D');
+        board.attemptMove("leopard", false, 'U');
+        board.attemptMove("rat", true, 'D');
+        board.attemptMove("leopard", false, 'U');
+        board.attemptMove("rat", true, 'D');
         assertDoesNotThrow(() -> {
-            boolean result = logger.previousStep();
-            assertTrue(result);
+            board.tryWithdraw(false);
         });
+        board.attemptMove("leopard", false, 'U');
+        board.attemptMove("rat", true, 'D');
+        board.attemptMove("leopard", false, 'U');
+        board.attemptMove("cat", true, 'L');
+        board.attemptMove("leopard", false, 'U');
+        board.attemptMove("cat", true, 'L');
+        board.attemptMove("leopard", false, 'U');
+        assertDoesNotThrow(() -> {
+            board.tryWithdraw(true);
+        });
+        board.attemptMove("cat", true, 'L');
+        board.attemptMove("leopard", false, 'U');
+        board.attemptMove("dog", true, 'D');
+        assertDoesNotThrow(() -> {
+            board.tryWithdraw(false);
+        });
+        board.attemptMove("leopard", false, 'U');
+        board.attemptMove("dog", true, 'D');
+        board.attemptMove("leopard", false, 'U');
+
+
+        logger.initReplay();
+
+        for(int i = 0; i < 22; i++) {
+            assertDoesNotThrow(() -> {
+                logger.nextStep();
+            });
+        }
+
+
+        assertThrows(Exception.class, () -> {
+            logger.nextStep();
+        });
+
+        for(int i = 0; i < 22; i++) {
+            assertDoesNotThrow(() -> {
+                logger.previousStep();
+            });
+        }
+
     }
 
     @Test

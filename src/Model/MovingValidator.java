@@ -125,10 +125,6 @@ public class MovingValidator implements Serializable {
                 if(attemptCapture(curPiece, curSquare.getPiece())) {
                     return newPosition;
                 } else {
-                    // Same‑side piece occupies the target square.
-                    if(curPiece.getBelongs() == curSquare.getPiece().getBelongs()) {
-                        throw new IllegalArgumentException("The target square have another your piece");
-                    }
                     // Opponent piece there but not legally capturable.
                     throw new IllegalArgumentException("You can not capture target piece!");
                 }
@@ -196,7 +192,6 @@ public class MovingValidator implements Serializable {
                 throw new IllegalArgumentException("You can not capture target piece!");
             }
         }
-
         return null;
     }
 

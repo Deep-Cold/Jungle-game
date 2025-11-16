@@ -90,9 +90,6 @@ public class Board implements Serializable {
         return board[x][y].getPiece();
     }
 
-    public void setPiece(int x, int y, Piece piece) {
-        board[x][y].setPiece(piece);
-    }
 
     public int getLength() {
         return length;
