@@ -197,8 +197,6 @@ public class MovingValidator implements Serializable {
             }
         }
 
-        // In normal situations we should either have returned a Coordinate or thrown.
-        // Reaching here typically means the Lion/Tiger river‑jump loop ran off the board.
         return null;
     }
 

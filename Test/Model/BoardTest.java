@@ -184,6 +184,32 @@ class BoardTest {
     }
 
     @Test
+    public void testCannotMove() {
+        for(Piece x : board.getMovingValidator().getLowerDictionary().values()) {
+            x.setDie();
+        }
+        assertFalse(board.haveValidMove(false));
+    }
+
+    @Test
+    public void blockLeap() {
+        assertTrue(board.attemptMove("elephant", false, 'U'));
+        assertTrue(board.attemptMove("tiger", false, 'U'));
+        assertTrue(board.attemptMove("tiger", false, 'U'));
+        assertTrue(board.attemptMove("tiger", false, 'R'));
+        assertTrue(board.attemptMove("rat", true, 'D'));
+        assertTrue(board.attemptMove("lion", true, 'D'));
+        assertTrue(board.attemptMove("lion", true, 'D'));
+        assertTrue(board.attemptMove("lion", true, 'R'));
+        assertFalse(board.attemptMove("tiger", false, 'U'));
+        assertTrue(board.attemptMove("wolf", false, 'D'));
+        assertTrue(board.attemptMove("tiger", false, 'R'));
+        assertTrue(board.attemptMove("tiger", false, 'R'));
+        assertTrue(board.attemptMove("tiger", false, 'U'));
+        assertFalse(board.attemptMove("tiger", false, 'L'));
+    }
+
+    @Test
     public void testOutOccupied() {
         assertTrue(board.attemptMove("rat", false, 'L'));
         assertTrue(board.attemptMove("rat", false, 'U'));
