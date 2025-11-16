@@ -12,7 +12,9 @@
 `PIECENAME DIRECTION` (pieceName can only be [rat, cat, dog, wolf, leopard, tiger, lion, elephant], direction can only be [U, D, L, R])
 
 ### Replay command
-`next` to 
+`next` to watch the next state
+`prev` to watch the previous state
+`quit` to end the replay
 
 ### main menu command
 `startNewGame` to load a new game with default setting

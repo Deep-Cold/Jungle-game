@@ -16,7 +16,7 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        curGame = Game.newGame();
+        curGame = new Game();
         originalIn = System.in;
     }
 

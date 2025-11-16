@@ -17,12 +17,19 @@ public class Game implements Serializable {
     private static Scanner scanner = new Scanner(System.in);
     private static final String replayPath = "./replay";
     private static final String archivePath = "./archive";
-    
-    
-    private Game() {
+
+    // For testing only
+    public Game() {
         board = new Board();
-        upperPlayer = new Player();
-        lowerPlayer = new Player();
+        upperPlayer = new Player(null);
+        lowerPlayer = new Player(null);
+        isActive = true;
+    }
+    
+    private Game(String firstName, String secondName) {
+        board = new Board();
+        upperPlayer = new Player(firstName);
+        lowerPlayer = new Player(secondName);
         isActive = true;
     }
     
@@ -171,7 +178,13 @@ public class Game implements Serializable {
     }
     
     public static Game newGame() {
-        return new Game();
+        System.out.print("Please enter the name for the lowerPlayer (empty for a random name) :> ");
+        String name1 = scanner.nextLine();
+        if(name1.isEmpty()) name1 = null;
+        System.out.print("Please enter the name for the upperPlayer (empty for a random name) :> ");
+        String name2 = scanner.nextLine();
+        if(name2.isEmpty()) name2 = null;
+        return new Game(name1, name2);
     }
     
     public Board getBoard() {

@@ -6,8 +6,12 @@ public class Player implements Serializable {
     private final String name;
     private int withdrawQuota;
 
-    public Player() {
-        name = Utils.getRandomString(5);
+    public Player(String _name) {
+        if(_name == null) {
+            name = Utils.getRandomString(5);
+        } else {
+            name = _name;
+        }
         withdrawQuota = 3;
     }
 

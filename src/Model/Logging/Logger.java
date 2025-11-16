@@ -88,6 +88,7 @@ public class Logger implements Serializable {
         if(curEvent instanceof Move) {
             curStack.push((MoveEvent) allEvents.get(curPointer));
             ((MoveEvent) curEvent).run();
+            curPointer++;
             return true;
         } else if(curEvent instanceof Captured) {
             curStack.push((Captured) allEvents.get(curPointer));
@@ -97,10 +98,12 @@ public class Logger implements Serializable {
             curEvent.printMessage();
             curStack.push((MoveEvent) allEvents.get(curPointer));
             ((MoveEvent) curEvent).run();
+            curPointer++;
             return true;
         } else if(curEvent instanceof Withdraw) {
             int rem = 2;
             while(rem > 0) {
+                reverseStack.push(curStack.peek());
                 MoveEvent currentEvent = curStack.pop();
                 if(currentEvent instanceof Move) {
                     rem--;
@@ -108,11 +111,13 @@ public class Logger implements Serializable {
                 currentEvent.withdraw();
                 currentEvent.printReverseMessage();
                 if(rem == 0 && curStack.peek() instanceof Captured) {
+                    reverseStack.push(curStack.peek());
                     currentEvent = curStack.pop();
                     currentEvent.withdraw();
                     currentEvent.printReverseMessage();
                 }
             }
+            curPointer++;
             return false;
         }
         curPointer++;
@@ -125,14 +130,12 @@ public class Logger implements Serializable {
         }
         curPointer--;
         Event curEvent = allEvents.get(curPointer);
-        curEvent.printReverseMessage();
         if(curEvent instanceof Move) {
             curStack.pop();
             ((MoveEvent) curEvent).withdraw();
             if(curPointer > 0 && allEvents.get(curPointer - 1) instanceof Captured) {
                 curPointer--;
-                curStack.peek().withdraw();
-                curStack.pop().printReverseMessage();
+                curStack.pop().withdraw();
             }
             return true;
         } else if(curEvent instanceof Captured) {
@@ -142,12 +145,12 @@ public class Logger implements Serializable {
         } else if(curEvent instanceof Withdraw) {
             int rem = 2;
             while(rem > 0) {
+                curStack.push(reverseStack.peek());
                 MoveEvent currentEvent = reverseStack.pop();
                 if(currentEvent instanceof Move) {
                     rem--;
                 }
                 currentEvent.run();
-                currentEvent.printMessage();
             }
             return false;
         }

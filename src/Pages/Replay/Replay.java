@@ -26,10 +26,11 @@ public class Replay implements Serializable {
         Logger curLogger = board.getLogger();
         curLogger.initReplay();
         boolean currentTurn = false;
+        Display.displayBoard(board);
         while(true) {
-            Display.displayBoard(board);
             System.out.flush();
             System.out.println();
+            System.out.print("> ");
             String line = scanner.nextLine();
             String[] arr = line.split("\\s+");
             if(arr.length == 0) {
@@ -45,15 +46,16 @@ public class Replay implements Serializable {
                     if(curLogger.nextStep()) {
                         currentTurn = !currentTurn;
                     }
+                    Display.displayBoard(board);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             } else if(arr[0].equalsIgnoreCase("prev")) {
                 try {
-                    System.out.println(getFullName(currentTurn) + "'s turn: ");
                     if(curLogger.previousStep()) {
                         currentTurn = !currentTurn;
                     }
+                    Display.displayBoard(board);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
