@@ -23,5 +23,5 @@
 
 `startNewGame` to load a new game with default setting
 `watchRelay` to check all replay that can view
-`continueGame` to check all archive that can continue
-`quit` to quit the program
+`loadGame` to check all archive that can continue
+`exit` to quit the program
