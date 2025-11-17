@@ -118,6 +118,11 @@ public class Game implements Serializable {
                 if(currentTurn ? upperPlayer.checkWithdrawQuota() : lowerPlayer.checkWithdrawQuota()) {
                     try {
                         board.tryWithdraw(currentTurn);
+                        if (currentTurn) {
+                            upperPlayer.deductWithdrawQuota();
+                        } else {
+                            lowerPlayer.deductWithdrawQuota();
+                        }
                         System.out.println("Withdraw successful! You have " + (currentTurn ? upperPlayer.getWithdrawQuota() : lowerPlayer.getWithdrawQuota()) + " withdraw Quota left");
                         Display.displayBoard(board);
                     } catch (IllegalArgumentException e) {
