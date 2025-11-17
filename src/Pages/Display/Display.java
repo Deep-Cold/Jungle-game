@@ -169,7 +169,7 @@ public class Display {
         System.out.println("  r/R = Rat, c/C = Cat, d/D = Dog, w/W = Wolf");
         System.out.println("  p/P = Leopard, t/T = Tiger, i/I = Lion, e/E = Elephant");
         System.out.println("Squares: ≈≈≈ = River, ■ = Trap, ▲ = Den, (space) = Normal");
-        System.out.println("Coordinates: (row, column) where row A-G (bottom to top), column 1-9 (left to right)");
+        System.out.println("Coordinates: (row, column) where row 1-9 (bottom to top), column A-G (left to right)");
     }
 }
     
