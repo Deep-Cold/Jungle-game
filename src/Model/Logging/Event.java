@@ -99,9 +99,9 @@ class Withdraw extends Event {
     }
 
     public void printMessage() {
-        System.out.println(turn ? "upperPlayer" : "lowerPlayer" + " + Withdraw");
+        System.out.println(turn ? "upperPlayer" : "lowerPlayer" + " +Withdraw");
     }
     public void printReverseMessage() {
-        System.out.println(turn ? "upperPlayer" : "lowerPlayer" + " - Withdraw");
+        System.out.println(turn ? "upperPlayer" : "lowerPlayer" + " -Withdraw");
     }
 }

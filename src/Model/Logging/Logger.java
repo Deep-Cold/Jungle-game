@@ -81,7 +81,7 @@ public class Logger implements Serializable {
     // Must call initReplay before use, true for need swap role
     public boolean nextStep() {
         if(curPointer == allEvents.size()) {
-            throw new IllegalStateException("This is the last step");
+            throw new IllegalStateException("No more next step!");
         }
         Event curEvent = allEvents.get(curPointer);
         curEvent.printMessage();
@@ -110,7 +110,7 @@ public class Logger implements Serializable {
                 }
                 currentEvent.withdraw();
                 currentEvent.printReverseMessage();
-                if(rem == 0 && curStack.peek() instanceof Captured) {
+                if(rem == 0 && !curStack.empty() && curStack.peek() instanceof Captured) {
                     reverseStack.push(curStack.peek());
                     currentEvent = curStack.pop();
                     currentEvent.withdraw();
@@ -125,7 +125,7 @@ public class Logger implements Serializable {
 
     public boolean previousStep() {
         if(curPointer == 0) {
-            throw new IllegalStateException("This is the original state");
+            throw new IllegalStateException("No more previous step!");
         }
         curPointer--;
         Event curEvent = allEvents.get(curPointer);

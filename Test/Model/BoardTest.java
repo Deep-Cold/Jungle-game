@@ -17,13 +17,16 @@ class BoardTest {
 
     @Test
     public void testMoving1() {
+        // normal move exceed border
         assertFalse(board.attemptMove("tiger", false, 'D'));
         assertTrue(board.attemptMove("tiger", false, 'U'));
         assertFalse(board.attemptMove("tiger", false, 'U'));
 
+        // normal move exceed border
         assertTrue(board.attemptMove("elephant", false, 'U'));
         assertFalse(board.attemptMove("elephant", false, 'R'));
 
+        // normal move into den
         assertTrue(board.attemptMove("lion", false, 'L'));
         assertTrue(board.attemptMove("lion", false, 'L'));
         assertFalse(board.attemptMove("lion", false, 'L'));
@@ -32,6 +35,7 @@ class BoardTest {
 
     @Test
     public void waterAttack() {
+        // attack from water
         assertTrue(board.attemptMove("rat", false, 'L'));
         assertTrue(board.attemptMove("rat", false, 'U'));
         assertTrue(board.attemptMove("rat", false, 'L'));
@@ -46,11 +50,13 @@ class BoardTest {
 
     @Test
     public void testMoving2() {
+        // block by an enemy piece
         assertTrue(board.attemptMove("elephant", false, 'U'));
         assertTrue(board.attemptMove("elephant", false, 'U'));
         assertTrue(board.attemptMove("elephant", false, 'U'));
         assertFalse(board.attemptMove("elephant", false, 'U'));
 
+        // jump across river
         assertTrue(board.attemptMove("tiger", false, 'U'));
         assertTrue(board.attemptMove("tiger", false, 'U'));
         assertTrue(board.attemptMove("tiger", false, 'R'));
@@ -59,6 +65,7 @@ class BoardTest {
 
     @Test
     public void testMoving3() {
+        // attack from water
         assertTrue(board.attemptMove("rat", false, 'L'));
         assertTrue(board.attemptMove("rat", false, 'U'));
         assertTrue(board.attemptMove("rat", false, 'U'));
@@ -69,6 +76,7 @@ class BoardTest {
 
     @Test
     public void testMoving4() {
+        // get into other's den
         assertTrue(board.attemptMove("leopard", false, 'L'));
         assertTrue(board.attemptMove("leopard", false, 'U'));
         assertTrue(board.attemptMove("leopard", false, 'U'));
@@ -226,6 +234,7 @@ class BoardTest {
 
     @Test
     public void testOutOccupied() {
+        // try to get out of the water but occupied by another piece
         assertTrue(board.attemptMove("rat", false, 'L'));
         assertTrue(board.attemptMove("rat", false, 'U'));
         assertTrue(board.attemptMove("dog", false, 'U'));
@@ -241,8 +250,6 @@ class BoardTest {
 
         assertTrue(board.attemptMove("rat", true, 'R'));
         assertFalse(board.attemptMove("rat", true, 'D'));
-
-
 
     }
 
