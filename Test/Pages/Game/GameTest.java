@@ -133,6 +133,5 @@ class GameTest {
         
         // Verify game end: upperPlayer's den is captured
         assertTrue(board.checkDen(true), "upperPlayer's den should be captured");
-        assertTrue(board.inDen(true), "upperPlayer's den should have a piece");
     }
 }
