@@ -16,7 +16,7 @@ public class LoadReplay {
             return;
         }
         
-        File[] files = dir.listFiles((d, name) -> name.endsWith(".replay"));
+        File[] files = dir.listFiles((d, name) -> name.endsWith(".record"));
         if(files == null || files.length == 0) {
             System.out.println("No saved replays found in replay directory.");
             return;
@@ -40,7 +40,7 @@ public class LoadReplay {
                 return;
             }
 
-            File[] files = dir.listFiles((d, name) -> name.endsWith(".replay"));
+            File[] files = dir.listFiles((d, name) -> name.endsWith(".record"));
             if(files == null || files.length == 0) {
                 System.out.println("No saved replays found in replay directory.");
                 return;

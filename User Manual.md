@@ -56,7 +56,7 @@ Note that you can only do this command on your own turn.
 
 `saveReplay filename`
 
-- Saves the current replay buffer to `replay/filename.replay`.
+- Saves the current replay buffer to `replay/filename.record`.
 
 **Note**
 
