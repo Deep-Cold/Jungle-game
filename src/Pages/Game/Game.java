@@ -36,8 +36,8 @@ public class Game implements Serializable {
      */
     private Game(String firstName, String secondName) {
         board = new Board();
-        upperPlayer = new Player(firstName);
-        lowerPlayer = new Player(secondName);
+        upperPlayer = new Player(secondName);
+        lowerPlayer = new Player(firstName);
         isActive = true;
     }
     
@@ -165,6 +165,10 @@ public class Game implements Serializable {
                 // Expect exactly 2 tokens: "<pieceName> <direction>".
                 if(arr.length > 2) {
                     System.out.println("Too many argument, please enter again");
+                    continue;
+                }
+                if(arr.length < 2) {
+                    System.out.println("Please indicate a direction, try again");
                     continue;
                 }
                 // Validate direction format (e.g. U/D/L/R).
