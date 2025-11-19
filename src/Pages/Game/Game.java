@@ -84,11 +84,11 @@ public class Game implements Serializable {
     }
     
     /**
-     * Save a replay snapshot of the current board and player names into a {@code .replay} file.
+     * Save a replay snapshot of the current board and player names into a {@code .record} file.
      * <p>
      * Note that this does NOT re-serialize the full {@code Game} object, but rather
      * creates a {@link Replay} instance from the current {@link Board} and both player names
-     * and writes that object into {@code ./replay/<filename>.replay}.
+     * and writes that object into {@code ./replay/<filename>.record}.
      *
      * @param filename base filename without extension; must match {@code [a-zA-Z0-9. _-]+}.
      * @throws IllegalArgumentException if the filename is illegal or the file cannot be written.
@@ -103,9 +103,9 @@ public class Game implements Serializable {
         }
         Replay curReplay = new Replay(board, lowerPlayer.getName(), upperPlayer.getName());
         try {
-            FileOutputStream fos = new FileOutputStream("./replay/" + filename + ".replay");
+            FileOutputStream fos = new FileOutputStream("./replay/" + filename + ".record");
             ObjectOutputStream out = new ObjectOutputStream(fos);
-            System.out.println("Saving replay to" + "./replay/" + filename + ".replay");
+            System.out.println("Saving replay to" + "./replay/" + filename + ".record");
             out.writeObject(curReplay);
             out.close();
             fos.close();
@@ -130,7 +130,7 @@ public class Game implements Serializable {
      *   <li>{@code &lt;pieceName&gt; &lt;direction&gt;} – move a piece (e.g. {@code rat U}).</li>
      *   <li>{@code withdraw} – undo the last move for the current player (quota-limited).</li>
      *   <li>{@code saveGame [filename]} – save current game as {@code .jungle}.</li>
-     *   <li>{@code saveReplay [filename]} – save current replay snapshot as {@code .replay}.</li>
+     *   <li>{@code saveReplay [filename]} – save current replay snapshot as {@code .record}.</li>
      *   <li>{@code close} – exit the game loop without automatic saving.</li>
      * </ul>
      * Input lines are parsed by simple whitespace splitting; invalid commands will print
