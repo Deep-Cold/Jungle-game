@@ -24,7 +24,7 @@ public class Player implements Serializable {
     }
 
     public boolean checkWithdrawQuota() {
-        return withdrawQuota >= 0;
+        return withdrawQuota > 0;
     }
 
     public void deductWithdrawQuota() {
