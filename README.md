@@ -28,7 +28,7 @@
 
 `startNewGame` to load a new game with default setting
 
-`watchRelay` to check all replay that can view
+`watchReplay` to check all replay that can view
 
 `loadGame` to check all archive that can continue
 

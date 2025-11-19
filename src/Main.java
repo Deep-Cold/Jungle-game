@@ -1,7 +1,7 @@
 import java.util.Scanner;
-import Pages.Game.Game;
-import Pages.Loading.LoadGame;
-import Pages.Loading.LoadReplay;
+import pages.game.Game;
+import pages.loading.LoadGame;
+import pages.loading.LoadReplay;
 
 public class Main {
     private static final Scanner sc = new Scanner(System.in);
@@ -22,7 +22,7 @@ public class Main {
             }
             Game currentGame;
             if(arr.length > 1) {
-                System.out.print("Too many arguments, please enter again");
+                System.out.println("Too many arguments, please enter again");
                 continue;
             }
             if(arr[0].equalsIgnoreCase("startNewGame")) {

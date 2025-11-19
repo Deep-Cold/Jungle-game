@@ -10,7 +10,7 @@
 ```
 Implementation/
 ├─ src/                     # Game source code (entry: Main.java)
-│  └─ Model/, Pages/, ...
+│  └─ model/, pages/, ...
 ├─ Test/                    # JUnit 5 tests mirroring main packages
 ├─ out/                     # IntelliJ default build output
 └─ archive/, replay/        # Saved games and replays
@@ -30,7 +30,7 @@ Implementation/
    - `Main class`: `Main`.
    - Program arguments: *(leave empty)*.
 2. Click **Run** to launch; the console shows the text-based menu (`startNewGame`, `loadGame`, `watchReplay`, `exit`).
-3. For debugging, set breakpoints anywhere in `src/Model` or `src/Pages` and click **Debug Main**. Standard debugger tools (step into/out, evaluate expression, watches) are available.
+3. For debugging, set breakpoints anywhere in `src/model` or `src/pages` and click **Debug Main**. Standard debugger tools (step into/out, evaluate expression, watches) are available.
 
 *You may also directly enter class `Main` under `/src` and click the button of the `main` method to run.*
 
@@ -43,7 +43,7 @@ Implementation/
 
 **Run Unit Test**
 
-1. Right-click the `Test` directory or any specific test class (e.g., `Test/Model/BoardTest.java`) and choose **Run 'Tests in ...'**.
+1. Right-click the `Test` directory or any specific test class (e.g., `Test/model/BoardTest.java`) and choose **Run 'Tests in ...'**.
 3. IntelliJ’s test runner reports pass/fail counts and stack traces. Use **Rerun Failed Tests** for quick iterations.
 
 ## Coverage in IntelliJ
@@ -51,7 +51,7 @@ Implementation/
 2. The IDE displays line and class coverage overlays inside editors.
 
 ## Debugging Tips
-- Utilize conditional breakpoints when diagnosing complex move validations in `Model/MovingValidator.java`.
+- Utilize conditional breakpoints when diagnosing complex move validations in `model/MovingValidator.java`.
 - The textual UI reads from `Scanner`. To simulate scripted inputs during debugging, prepare a `.txt` file with commands and redirect standard input in the run configuration (`Modify options > Redirect input`).
 
 ## Launch Checklist
