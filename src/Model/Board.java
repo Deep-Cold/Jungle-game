@@ -150,12 +150,6 @@ public class Board implements Serializable {
     public boolean haveValidMove(boolean turn) {
         return movingValidator.haveValidMove(turn);
     }
-    /*
-        side should be 0 for lower player
-     */
-    public boolean inDen(boolean side) {
-        return getSquare(side ? upperPlayerDen : lowerPlayerDen).getPiece() != null;
-    }
 
     // for test only
     public MovingValidator getMovingValidator() {
