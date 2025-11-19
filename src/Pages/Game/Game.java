@@ -171,6 +171,7 @@ public class Game implements Serializable {
                     System.out.println("Please indicate a direction, try again");
                     continue;
                 }
+
                 // Validate direction format (e.g. U/D/L/R).
                 if(!Utils.checkMove(arr[1])) {
                     System.out.println("Illegal move, please enter again");
